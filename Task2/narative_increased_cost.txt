@@ -1,0 +1,9 @@
+changes in EBS of EC2 instances for increased costs:
+	storage Type: Provisioned IOPS SSD(io2)
+	provisioned IOPS: 16000
+	storage Amount: 2TB
+	storage Amount per IO Volume: 2TB
+	Snapshot Frequency: Daily
+	Amounts changed per snapshot: 500GB
+	type of instances: dedicated
+	number of instances: 7

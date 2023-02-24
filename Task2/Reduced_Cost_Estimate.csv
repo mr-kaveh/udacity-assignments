@@ -1,0 +1,25 @@
+﻿Estimate summary
+Upfront cost,Monthly cost,Total 12 months cost,Currency
+8409.6,5816.4800000000005,78207.36,USD
+,,* Includes upfront cost
+
+
+Detailed Estimate
+Group hierarchy,Region,Description,Service,Upfront,Monthly,First 12 months total,Currency,Configuration summary
+My Estimate,US East (N. Virginia),S3-Bucket-estimate,S3 Standard,0,25.67,308.04,USD,S3 Standard storage (1 TB per month)
+My Estimate,US East (N. Virginia),S3-Bucket-estimate,Data Transfer,0,0,0.00,USD,
+My Estimate,US East (N. Virginia),CloudFront,Amazon CloudFront,0,48.5,582.00,USD,"Data transfer out to internet (500 GB per month), Data transfer out to origin (250 GB per month), Number of requests (HTTPS) (1000000 per month)"
+My Estimate,US East (N. Virginia),vpc,VPN Connection,0,658.25,7899.00,USD,"Working days per month (22), Number of Site-to-Site VPN Connections (5), Number of subnet associations (4)"
+My Estimate,US East (N. Virginia),vpc,Network Address Translation (NAT) Gateway,0,37.35,448.20,USD,Number of NAT Gateways (1)
+My Estimate,US East (N. Virginia),vpc,Data Transfer,0,184.32,2211.84,USD,"DT Inbound: Internet (1 TB per month), DT Outbound: Internet (2 TB per month), DT Intra-Region: (0 TB per month), Data transfer cost (184.32)"
+My Estimate,US East (N. Virginia),vpc,Gateway Load Balancer,0,31.79,381.48,USD,"Number of Availability Zones that Gateway Load Balancer is deployed to (1), Number of Gateway Load Balancer Endpoints (1), Total processed bytes (2 TB per month), Average number of new connections/flows (100 per minute), Average connection/flow duration (200 seconds)"
+My Estimate,US East (N. Virginia),ELB,Application Load Balancer,0,133.23,1598.76,USD,Number of Application Load Balancers (1)
+My Estimate,US East (N. Virginia),ELB,Gateway Load Balancer,0,563.9300000000001,6767.16,USD,"Number of Availability Zones that Gateway Load Balancer is deployed to (1), Number of Gateway Load Balancer Endpoints (1), Total processed bytes (100 GB per hour), Average number of new connections/flows (100 per second), Average connection/flow duration (50 seconds)"
+My Estimate,US East (N. Virginia),EC2 Instances,Amazon EC2 ,8409.6,2250.8,35419.20,USD,"Tenancy (Shared Instances), Operating system (Linux), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month), Workload (Consistent, Number of instances: 4), Enable monitoring (disabled), Advance EC2 instance (m5a.4xlarge), Pricing strategy ( 1 Year  Partial upfront), Storage amount (500 GB), Snapshot Frequency (No snapshot storage), Provisioning IOPS io1 (5000)"
+My Estimate,US East (N. Virginia),Elastic IP,Amazon Elastic IP,0,0,0.00,USD,"Number of EC2 instances (4), Number of EIPs per instance (1)"
+My Estimate,US East (N. Virginia),Database,Amazon RDS for MySQL,0,1882.6399999999999,22591.68,USD,"Storage for each RDS instance (General Purpose SSD (gp2)), Storage amount (1 TB), Quantity (2), Instance type (db.m1.xlarge), Utilization (On-Demand only) (100 %Utilized/Month), Deployment option (Multi-AZ), Pricing strategy (OnDemand), Total Size of Backup Processed for Export (GB) (1000 per month)"
+
+
+
+Acknowledgement
+"* AWS Pricing Calculator provides only an estimate of your AWS fees and doesn't include any taxes that might apply. Your actual fees depend on a variety of factors, including your actual usage of AWS services."
