@@ -1,12 +1,8 @@
 # udacity-assignments
 
-# Data durability and recovery
+# Project1: Data durability and recovery
 
 In this project you will create highly available solutions to common use cases.  You will build a Multi-AvailabilityZone, Multi-Region database and show how to use it in multiple geographically separate AWS regions.  You will also build a website hosting solution that is versioned so that any data destruction and accidents can be quickly and easily undone.
-
-## Getting Started
-
-To get started, clone this repo.  Aside from instructions, it contains a CloudFormation script to build an AWS VPC with public and private subnets.  It also contains an example website that you will host in an AWS S3 bucket in your account.
 
 ## Project Instructions
 ### Cloud formation
@@ -148,4 +144,206 @@ You will now need to “recover” the object:
 
 **SAVE** a screenshot of the modified webpage. Name your screenshot "s3_delete_revert.png"
 
-## License
+# Project2: Design, Provision and Monitor AWS Infrastructure at Scale
+
+### Part 1
+
+You have been asked to plan and provision a cost-effective AWS infrastructure for a new social media application development project for 50,000 single-region users. The project requires the following AWS infrastructure and services:
+
+-   Infrastructure in the following region:  `us-east-1`
+-   A user/client machine
+-   One VPC
+-   Two Availability Zones
+-   Four Subnets (2 Public, 2 Private)
+-   A NAT Gateway
+-   A CloudFront distribution with an S3 Bucket
+-   Web servers in the Public Subnets
+-   Application Servers in the Private Subnets
+-   DB Servers in the Private Subnets
+-   Web Servers are Load Balanced and Autoscaled
+-   Application Servers are Load Balanced and Autoscaled
+-   A Master DB in AZ 1 with a read replica in AZ2
+
+#### Make sure to:
+
+-   All services in the diagram include a label to indicate the type of service and any necessary parameters (e.g. size, location).
+-   Use visible lines to represent all network connections
+-   Use  [LucidChart(opens in a new tab)](https://www.lucidchart.com/)  or a similar diagramming application to create your schematic. There are icons for Auto Scaling and Application Load Balancer that you can use.
+-   Set the server types based on the budget you have; therefore, label the servers after you finish the cost estimations.
+-   Export your schematic as a PDF and save it as  `Udacity_Diagram_1.pdf`.
+
+### Part 2
+
+You have been asked to plan a SERVERLESS architecture schematic for a new application development project. The project requires the following AWS infrastructure and services.
+
+-   A user/client machine
+-   AWS Route 53
+-   A CloudFront Distribution
+-   AWS Cognito
+-   AWS Lambda
+-   API Gateway
+-   DynamoDB
+-   S3 Storage
+
+#### Make sure to:
+
+-   All services in the diagram include a label to indicate the type of service
+-   Use visible lines to represent all network connections
+-   Export your schematic as a PDF and save it as  `Udacity_Diagram_2.pdf`
+
+# Project3: Secure the Recipe Vault Web Application
+
+_**Deliverables for Exercise 1:**_
+
+-   **E1T4.txt**  - Text file identifying 2 poor security practices with justification.
+
+### Task 1: Review Architecture Diagram
+
+In this task, the objective is to familiarize yourself with the starting architecture diagram. An architecture diagram has been provided which reflects the resources that will be deployed in your AWS account.
+
+The diagram file, title  `AWS-WebServiceDiagram-v1-insecure.png`, can be found in the  _starter_  directory in  [this repo(opens in a new tab)](https://github.com/udacity/nd063-c3-design-for-security-project-starter).
+
+![An image of Architecture Diagram of Project Environment](https://video.udacity-data.com/topher/2020/February/5e46ed35_aws-webservicediagram-v1-insecure/aws-webservicediagram-v1-insecure.png)
+
+Architecture Diagram of Project Environment
+
+#### Expected user flow:
+
+-   Clients will invoke a public-facing web service to pull free recipes.
+-   The web service is hosted by an HTTP load balancer listening on port 80.
+-   The web service is forwarding requests to the web application instance which listens on port 5000.
+-   The web application instance will, in turn, use the public-facing AWS API to pull recipe files from the S3 bucket hosting free recipes. An IAM role and policy will provide the web app instance permissions required to access objects in the S3 bucket.
+-   Another S3 bucket is used as a vault to store secret recipes; there are privileged users who would need access to this bucket. The web application server does not need access to this bucket.
+
+#### Attack flow:
+
+-   Scripts simulating an attack will be run from a separate instance which is in an un-trusted subnet.
+-   The scripts will attempt to break into the web application instance using the public IP and attempt to access data in the secret recipe S3 bucket.
+
+### Task 2: Review CloudFormation Template
+
+In this task, the objective is to familiarize yourself with the starter code and to get you up and running quickly. Spend a few minutes going through the .yml files in the  _starter_  folder to get a feel for how parts of the code will map to the components in the architecture diagram.
+
+Additionally, we have provided a CloudFormation template which will deploy the following resources in AWS:
+
+#### VPC Stack for the underlying network:
+
+-   A VPC with 2 public subnets, one private subnet, and internet gateways etc for internet access.
+
+#### S3 bucket stack:
+
+-   2 S3 buckets that will contain data objects for the application.
+
+#### Application stack:
+
+-   An EC2 instance that will act as an external attacker from which we will test the ability of our environment to handle threats
+-   An EC2 instance that will be running a simple web service.
+-   Application LoadBalancer
+-   Security groups
+-   IAM role
+
+### Task 3: Deployment of Initial Infrastructure
+
+In this task, the objective is to deploy the CloudFormation stacks that will create the below environment.
+
+![Diagram of CloudFormation infrastructure](https://video.udacity-data.com/topher/2020/February/5e46ed73_aws-webservicediagram-v1-insecure/aws-webservicediagram-v1-insecure.png)
+
+Diagram of CloudFormation infrastructure
+
+We will utilize the AWS CLI in this guide, however, you are welcome to use the AWS console to deploy the CloudFormation templates.
+
+**0. Make sure that your IDE (preferably VS Code) is integrated with AWS.**
+
+Follow the instructions on the page "Connect VS Code with AWS" in "Lesson 1: AWS Cloud Architect Program Introduction".
+
+#### 1. From the root directory of the repository - execute the below command to deploy the templates.
+
+##### Deploy the S3 buckets
+
+`aws cloudformation create-stack --region us-east-1  --stack-name c3-s3 --template-body file://starter/c3-s3.yml`
+
+Expected example output:
+
+`{   "StackId":  "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-s3/70dfd370-2118-11ea-aea4-12d607a4fd1c"  }`
+
+##### Deploy the VPC and Subnets
+
+`aws cloudformation create-stack --region us-east-1  --stack-name c3-vpc --template-body file://starter/c3-vpc.yml`
+
+Expected example output:
+
+`{   "StackId":  "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-vpc/70dfd370-2118-11ea-aea4-12d607a4fd1c"  }`
+
+##### Deploy the Application Stack
+
+You will need to specify a pre-existing key-pair name. If you don't have a pre-existing key-pair, follow these steps below:
+
+-   Launch AWS Console by clicking on  `Launch AWS Gateway`  followed by  `Open AWS Console`.
+-   Go to the  `EC2 dashboard`, then under the  `Networking & Security`  to the  `Key Pairs`
+-   Click on  `Key-pairs`  and then click on  `Create key pair`  on the top right.
+-   Enter  `Name`, select  `pem`  file format and then click on  `Create key pair`  on the bottom right.
+
+> Note - Your key's region must exist in the same region that you plan to deploy your stack.
+
+`aws cloudformation create-stack --region us-east-1  --stack-name c3-app --template-body file://starter/c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=<add your key pair name here> --capabilities CAPABILITY_IAM`
+
+> Note - If you created a key called  `create-stack-key.pem`, then you should replace  `<add your key pair name here>`  with  `create-stack-key`  - without the extension
+
+Expected example output:
+
+`{   "StackId":  "arn:aws:cloudformation:us-east-1:4363053XXXXXX:stack/c3-app/70dfd370-2118-11ea-aea4-12d607a4fd1c"  }`
+
+Expected example AWS Console status:  [https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks(opens in a new tab)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks)
+
+![A screenshot of successful CloudFormation infrastructure in AWS Portal](https://video.udacity-data.com/topher/2024/February/65cdd2bf_2024-02-15-10_00_40-stacks-_-cloudformation-_-us-east-1/2024-02-15-10_00_40-stacks-_-cloudformation-_-us-east-1.jpeg)
+
+Successful CloudFormation Infrastructure
+
+#### 2. Once you see Status is CREATE_COMPLETE for all 3 stacks, obtain the required parameters needed for the project.
+
+Obtain the name of the S3 bucket by navigating to the Outputs section of the stack:
+
+![Image of Obtain the name of the S3 bucket by navigating to the Outputs section of the stack:](https://video.udacity-data.com/topher/2024/February/65cdd311_2024-02-15-10_01_20-cloudformation-stack-c3-s3/2024-02-15-10_01_20-cloudformation-stack-c3-s3.jpeg)
+
+Note down the names of the two other buckets that have been created, one for free recipes and one for secret recipes. You will need the bucket names to upload example recipe data to the buckets and to run the attack scripts.
+
+-   You will need the Application Load Balancer endpoint to test the web service - ApplicationURL
+-   You will need the web application EC2 instance public IP address to simulate the attack - ApplicationInstanceIP
+-   You will need the public IP address of the attack instance from which to run the attack scripts - AttackInstanceIP
+
+You can get these from the Outputs section of the  **c3-app**  stack.
+
+![Image of the name of the buckets in the outputs section of the c3-app stack](https://video.udacity-data.com/topher/2024/February/65cdd32a_2024-02-15-10_02_26-cloudformation-stack-c3-s3/2024-02-15-10_02_26-cloudformation-stack-c3-s3.jpeg)
+
+#### 3. Upload data to S3 buckets
+
+Upload the free recipes to the free recipe S3 bucket from step 2. Do this by typing this command into the console (you will replace  `<BucketNameRecipesFree>`  with your bucket name):
+
+Example:
+
+`aws s3 cp free_recipe.txt s3://<BucketNameRecipesFree>/  --region us-east-1`
+
+Upload the secret recipes to the secret recipe S3 bucket from step 2. Do this by typing this command into the console (you will replace  `<BucketNameRecipesSecret>`  with your bucket name):
+
+Example:
+
+`aws s3 cp secret_recipe.txt s3://<BucketNameRecipesSecret>/  --region us-east-1`
+
+#### 4. Test the application
+
+Invoke the web service using the application load balancer URL:
+
+`http://<ApplicationURL>/free_recipe`
+
+You should receive a recipe for banana bread.
+
+The AMIs specified in the cloud formation template exist in the us-east-1 (N. Virginia) region. You will need to set this as your default region when deploying resources for this project.
+
+### Task 4: Identify Bad Practices
+
+Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security. List these 2 practices, and a justification for your choices, in the text file named E1T4.txt.
+
+**Deliverables:**
+
+-   **E1T4.txt**  - Text file identifying 2 poor security practices with justification.
+
