@@ -1,0 +1,10 @@
+Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
+
+# Poor practice 1
+WebAppSG and AppLoadBalancerSG security group rules allow any IP address to access ports 22, 80, and 5000.
+As a result, these instances are vulnerable to brute-force attacks or exploits of known vulnerabilities. 
+Access should be limited to specific IP addresses or ranges.
+
+# Poor practice 2
+The instance profile role is assigned to the EC2 instance and has full access to S3, which can be a security risk if the S3 bucket contains sensitive information. 
+It's recommended to limit the access to only the required S3 buckets and objects.

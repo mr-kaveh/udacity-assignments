@@ -1,0 +1,8 @@
+The EC2 instance is using an AMI ID that is hardcoded in the template. It's better to use parameterized AMI IDs or use the latest version
+of the AMI to reduce the chances of running an instance with known security vulnerabilities.
+
+The EC2 instance's user data includes environment variables for S3 bucket names and secrets. It's better to store these secrets in a secure parameter store or a secrets
+manager and use AWS Identity and Access Management (IAM) to control access to them.
+
+The security group rules for the "AppLoadBalancerSG" allow any IP address to access port 80, which can make the load balancer vulnerable to denial-of-service attacks or other exploits.
+It's better to limit the access to specific IP addresses or ranges.

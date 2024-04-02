@@ -1,0 +1,14 @@
+The Recovery Time Objective (RTO) for our multi-AZ database in AWS RDS depends on several factors,
+including the type of database, the size of the database, and the infrastructure that is used to support the database.
+However, it is important to understand that the actual RTO will depend on various factors such as network latency, 
+storage I/O performance, and other infrastructure factors. Additionally, the RTO may be impacted by the configuration of the database,
+such as the use of provisioned IOPS or other performance-enhancing features. 
+In our primary instace (MySQL Multy-AZ) in case of a Single AZ outage the RTO can be less than 5 minutes ,and in case of Region outage the RTO can be between 5 to 10 minutes.
+
+The minimum RPO for a single AZ outage would typically be seconds, as data is constantly being 
+replicated between Availability Zones within the same region. The minimum RPO for a single region
+outage would likely be a few minutes, as data is replicated between regions, but there may be a delay
+before the most recent data is available. It's important to note that these figures can be influenced 
+by several factors, including network latency, database load, and the size of the data set being replicated.
+for our main Instance(MySQL multi-AZ) the RPO could be few seconds in case of Single AZ outage, and in case of Region Outage
+the RPO could be between 30 minutes to few hours

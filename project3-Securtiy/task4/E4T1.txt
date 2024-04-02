@@ -1,0 +1,14 @@
+1-
+
+	A- change SSH Daemon(/etc/ssh/sshd_config) configuration on the instances to not accept authentication with password (PasswordAuthentication no)
+
+	B- Set MaxAuthTries in /etc/ssh/sshd_config to reduce the number of authentication attempts permitted by a connection
+
+	C- in our Security Groups, users from any source (0.0.0.0/0) can request SSH connection, to prevent SSH brute force attacks to the EC2 instances we should
+	configure a security group rule that limits this SSH access to only trusted IP addresses/networks
+
+2-
+
+	A- We must prevent public access to the S3 bucket(cand-c3-secret-recipes) by checking the Block all Public Access
+
+	B- InstanceRolePolicy-C3 IAM Role has full access over S3 resources, and it is againt the Principle of least Privilege

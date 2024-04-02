@@ -1,0 +1,10 @@
+1. 
+	A. For scanning infrastructure as code templates => Terrascan 
+	B. To scan AMIs or containers for OS vulnerabilities => Trivy
+	C. For scanning an AWS environment for cloud configuration vulnerabilities => Amazon Inspector
+
+2.
+	
+	A. Terrascan => Publicly accessible resources, 	Use of default or weak passwords
+	B. Trivy => It can detect vulnerabilities in the operating system packages installed in your container images Like Linux kernel, system libraries, and other system components.
+	c. Amazon Inspector => can identify network security vulnerabilities such as open ports, unsecured protocols, and misconfigured network settings.

@@ -1,0 +1,3 @@
+To detect unauthorized and unexpected activity in your AWS environment, GuardDuty uses these data sources to detect anomalies involving the following AWS resource types: 
+IAM access keys, EC2 instances, S3 buckets, and Amazon EKS resources. While in transit from these data sources to GuardDuty, all of the log data is encrypted.
+GuardDuty extracts various fields from these logs for profiling and anomaly detection, and then discards the logs.

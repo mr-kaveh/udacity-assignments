@@ -1,0 +1,50 @@
+[ec2-user@ip-172-31-17-95 ~]$ mysql -u admin -h udacity-replica.ch5d2ybiz321.us-west-2.rds.amazonaws.com -p udacity
+
+Enter password: 
+
+Reading table information for completion of table and column names
+
+You can turn off this feature to get a quicker startup with -A
+
+
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+
+Your MySQL connection id is 31
+
+Server version: 8.0.28 Source distribution
+
+
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+
+#### Writing to read-replica Database ####
+MySQL [udacity]> insert into hd_certs values(100, "net+");
+
+ERROR 1290 (HY000): The MySQL server is running with the --read-only option so it cannot execute this statement
+
+#### reading from read-replica Database ####
+
+MySQL [udacity]> select * from hd_certs;
+
++----------+---------------------+
+
+| certd_id | certname            |
+
++----------+---------------------+
+
+|        1 | LPIC                |
+
+|        1 | udacity nano degree |
+
+|        2 | udacity nano degree |
+
++----------+---------------------+
+
+3 rows in set (0.00 sec)
+
